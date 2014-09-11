@@ -2,53 +2,65 @@ function log(idIn, valueIn, positionXIn, positionYIn) {
     var logContext = this;
     this.id = idIn;
     this.value = valueIn;
-    this.texture = PIXI.Texture.fromImage("log.png");
-    this.textureTrue = PIXI.Texture.fromImage("log_true.png");
-    if(this.value == 1)
-    {
-        this.textureTrue = PIXI.Texture.fromImage("log_true_1.png")
-        this.texture = PIXI.Texture.fromImage("menu_1.png");
-    }
-    
-    this.textureFalse = PIXI.Texture.fromImage("log_false.png");
+    this.frameTexture = PIXI.Texture.fromImage("log2.png");
+    //this.textureIndicatorNormal = PIXI.Texture.fromImage("leaf_empty.png");
+    this.textureIndicatorTrue = PIXI.Texture.fromImage("leaf_true.png");
+    this.textureIndicatorFalse = PIXI.Texture.fromImage("leaf_false.png");
+    this.textureBackground = PIXI.Texture.fromImage("buds/bud" + this.value + ".png");
 
     this.positionX = positionXIn;
     this.positionY = positionYIn;
-    this.sprite = new PIXI.Sprite(this.texture);
-    this.sprite.position.x = this.positionX;
-    this.sprite.position.y = this.positionY;
-    this.sprite.anchor.x = 0;
-    this.sprite.anchor.y = 0;
-    this.sprite.height = maxHeight / 16 * 2;
-    this.sprite.width = maxWidth / 10;
+    this.height = maxHeight / 16 * 2;
+    this.width = maxWidth / 10;
     
+    
+
+
+    this.frameSprite = generateSprite(this.frameTexture, this.positionX, this.positionY, this.width, this.height);
+    //this.indicatorSprite = generateSprite(this.textureIndicatorNormal, this.positionX + this.width / 4, this.positionY, this.width / 2, this.height);
+    this.indicatorTrueSprite = generateSprite(this.textureIndicatorTrue, this.positionX + this.width / 4, this.positionY, this.width / 2, this.height);
+    this.indicatorFalseSprite = generateSprite(this.textureIndicatorFalse, this.positionX + this.width / 4, this.positionY, this.width / 2, this.height);
+    this.backgroundSprite = generateSprite(this.textureBackground, this.positionX, this.positionY, this.width, this.height);
+
     //this.text = new PIXI.BitmapText("Pixi.js can has\nmultiline text!", { font: "35px Snippet", fill: "white", align: "left" });
     this.text = new PIXI.Text(this.value + "", { font: "bold italic 18px Arvo", fill: "#3e1707", align: "center", stroke: "#a4410e", strokeThickness: 7 });
     
-    this.text.position.x = this.positionX + this.sprite.width / 2.4;
-    this.text.position.y = this.positionY + this.sprite.height / 3;
+    this.text.position.x = this.positionX + this.width / 2.4;
+    this.text.position.y = this.positionY + this.height / 3;
 
-    this.setTextureTrue = function () {
-        this.sprite.setTexture(logContext.textureTrue);
+    this.setNormal = function () {
+        //this.sprite.setTexture(logContext.texture);
+        var hasChild = stage.children.indexOf( logContext.indicatorFalseSprite ) !== -1;
+        if(hasChild){
+             stage.removeChild(logContext.indicatorFalseSprite);
+        }
 
-        this.height = maxHeight / 16 * 2;
-        this.width = maxWidth / 10;
+        //stage.addChild(logContext.indicatorSprite);
+       
+        //this.height = maxHeight / 16 * 2;
+        //this.width = maxWidth / 10;
     }
 
-    this.setTextureFalse = function () {
-        var sprite = this.sprite;
-        sprite.setTexture(logContext.textureFalse);
 
-        setTimeout(function () { sprite.setTexture(logContext.texture); }, 500);
-        this.height = maxHeight / 16 * 2;
-        this.width = maxWidth / 10;
+    this.setTrue = function () {
+        //this.sprite.setTexture(logContext.textureIndicatorTrue);
+        stage.addChild(logContext.indicatorTrueSprite);
+        //this.height = maxHeight / 16 * 2;
+        //this.width = maxWidth / 10;
     }
 
-    this.setTextureNormal = function () {
-        this.sprite.setTexture(logContext.texture);
-        this.height = maxHeight / 16 * 2;
-        this.width = maxWidth / 10;
+    this.setFalse = function () {
+        //var sprite = this.sprite;
+        //sprite.setTexture(logContext.textureIndicatorFalse);
+        //console.log(logContext.indicatorFalseSprite);
+        stage.addChild(logContext.indicatorFalseSprite);
+
+        setTimeout(function () { logContext.setNormal() }, 500);
+        //this.height = maxHeight / 16 * 2;
+        //this.width = maxWidth / 10;
     }
+
+    
 
 }
 
@@ -60,7 +72,7 @@ function logInitialize(valueArray) {
     var logX = maxWidth / 5 * 4;
     var logY = maxHeight / 16 * 2.5;
     var resultArray = new Array(logMaxCount);
-    console.log(valueArray);
+    
     while (logCount < logMaxCount) {
         if (logCount != 0) {
 
@@ -76,9 +88,13 @@ function logInitialize(valueArray) {
         var value = valueArray[logCount];
         var templog = new log(logCount + 1, value, logX, logY);
         resultArray[logCount] = templog;
-        var logSprite = templog.sprite;
-        stage.addChild(logSprite);
-        stage.addChild(templog.text);
+        var logFrameSprite = templog.frameSprite;
+        var logIndicatorSprite = templog.indicatorSprite;
+        stage.addChild(templog.backgroundSprite);
+        stage.addChild(logFrameSprite);
+        //stage.addChild(logIndicatorSprite);
+        
+        //stage.addChild(templog.text);
         logCount = logCount + 1;
     }
 

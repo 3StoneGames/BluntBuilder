@@ -16,12 +16,13 @@
     <script src="menu.js"></script>
     <script src="log.js"></script>
     <script src="logManager.js"></script>
+    <script src="helper.js"></script>
    
 </head>
 <body>
 <script id="u">
     //helper methods for screen size
-var maxWidth = window.innerWidth;    
+    var maxWidth = window.innerWidth;    
     var maxHeight = window.innerHeight;
     window.addEventListener('orientationchange', handleOrientation, false);
     function handleOrientation() {
@@ -37,9 +38,15 @@ var maxWidth = window.innerWidth;
      
     var stage = new PIXI.Stage(0xD84833, true);
 
-     
+    var highScore = 0;
+    var highScoreText = new PIXI.Text(highScore + "", {font: "bold 60px Podkova", fill: "#cc00ff", align: "center", stroke: "#FFFFFF", strokeThickness: 6});
     
-     
+    highScoreText.position.x = 0;
+    highScoreText.position.y = 0;
+    
+
+    stage.addChild(highScoreText);
+
     var renderer = PIXI.autoDetectRenderer(maxWidth, maxHeight);
 
     document.body.appendChild(renderer.view);
@@ -53,8 +60,7 @@ var maxWidth = window.innerWidth;
     this.logManager = new logManager();
 
 var values = this.logManager.getNewLogs();
-    console.log(values);
-
+    
     this.logManager.setLogs(values);
     
     this.maxLogCount = 3;
