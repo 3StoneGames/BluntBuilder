@@ -24,16 +24,15 @@
      function getMobileHeight() {
          return getOrientation() == "landscape" ? screen.availWidth : screen.availHeight;
      };
-
-
+     
      // create an new instance of a pixi stage
-     var stage = new PIXI.Stage(0xD84833);
+     var stage = new PIXI.Stage(0xD84833, true);
 
      //max width
-     var maxWidth = getMobileWidth();
+     var maxWidth = window.innerWidth;//getMobileWidth();
 
      //max height
-     var maxHeight = getMobileHeight();
+     var maxHeight = window.innerHeight; //getMobileHeight();
      // create a renderer instance
      var renderer = PIXI.autoDetectRenderer(maxWidth, maxHeight);
 
@@ -41,30 +40,9 @@
      document.body.appendChild(renderer.view);
 
      requestAnimFrame(animate);
-     /*
-     function Box(textureIn, positionXIn, positionYIn) // Constructor
-    {
-        this.texture = textureIn;
-        this.positionX = positionXIn;
-        this.positionY = positionYIn;
-        this.sprite = new PIXI.Sprite(textureIn);
-        this.sprite.position.x = this.positionX;
-        this.sprite.position.y = this.positionY;
-        this.sprite.anchor.x = 0.5;
-        this.sprite.anchor.y = 0.5;
-    }
 
-   
-var blueBox = new Box("blue");
-alert(blueBox.getColor()); // will alert blue
-
-var greenBox = new Box("green");
-alert(greenBox.getColor()); 
-
-
-     */
      var menuTexture = PIXI.Texture.fromImage("menu.png");
-
+     var activeMenuTexture = PIXI.Texture.fromImage("menu_active.png");
 
      function menu(textureIn, positionXIn, positionYIn) {
          this.texture = textureIn;
@@ -75,39 +53,47 @@ alert(greenBox.getColor());
          this.sprite.position.y = this.positionY;
          this.sprite.anchor.x = 0;
          this.sprite.anchor.y = 0;
-         this.sprite.height = maxHeight / 16 * 2;
+         this.sprite.height = maxHeight / 16 * 3;
          this.sprite.width = maxWidth / 5;
 
          this.sprite.interactive = true;
-         //this.sprite.interactive = true;
-
+         
          this.sprite.click = function (data) {
-             // click!
              console.log("CLICK!");
-             //	alert("CLICK!")
+
          }
-         //this.sprite.interactive = true;
+
+         this.sprite.mousedown = this.sprite.touchstart = function (data) {
+
+             this.setTexture(activeMenuTexture);
+             this.height = maxHeight / 16 * 3;
+             this.width = maxWidth / 5;
+         }
+
+         this.sprite.mouseup = this.sprite.touchend = function (data) {
+             
+            this.setTexture(menuTexture);
+            this.height = maxHeight / 16 * 3;
+            this.width = maxWidth / 5;
+         }
+         
      }
-     /*
-     Box.prototype.getColor = function () {
-         return this.color;
-     }
-     */
+    
      var menuCount = 0;
      var menuMaxCount = 9;
      var menuX = 0;
-     var menuY = maxHeight / 16 * 12;
+     var menuY = maxHeight / 16 * 10;
      while (menuCount < menuMaxCount) {
          
          
          if (menuCount != 0) {
 
              if (menuCount % 2 == 0) {
-                 menuY = menuY - maxHeight / 16 * 2;
+                 menuY = menuY - maxHeight / 16 * 3;
                  menuX = menuX + maxWidth / 5;
              }
              else {
-                 menuY = menuY + maxHeight / 16 * 2;
+                 menuY = menuY + maxHeight / 16 * 3;
 
              }
          }
@@ -117,187 +103,16 @@ alert(greenBox.getColor());
          stage.addChild(menuSprite);
          menuCount = menuCount + 1;
      }
-
      
-
-     
-     
-          //menu1.sprite = PIXI.Sprite(menuTexture);
-     stage.addChild(menuSprite);
-
-
-
-     var button = new PIXI.Sprite(menuTexture);
-
-     button.anchor.x = 0.5;
-     button.anchor.y = 0.5;
-
-     button.position.x = 499;
-     button.position.y = 100;
-
-     // make the button interactive..		
-     button.setInteractive(true);
-
-     button.setInteractive(true);
-
-     // set the mousedown and touchstart callback..
-     button.mousedown = button.touchstart = function (data) {
-
-         this.isdown = true;
-         
-         this.alpha = 1;
-     }
-
-     // set the mouseup and touchend callback..
-     button.mouseup = button.touchend = function (data) {
-         this.isdown = false;
-
-        
-     }
-
-     // set the mouseover callback..
-     button.mouseover = function (data) {
-
-         this.isOver = true;
-
-         if (this.isdown) return
-
-     }
-
-     // set the mouseout callback..
-     button.mouseout = function (data) {
-
-         this.isOver = false;
-         if (this.isdown) return
-         
-     }
-
-     button.click = function (data) {
-         // click!
-         console.log("CLICK!");
-         //	alert("CLICK!")
-     }
-
-     button.tap = function (data) {
-         // click!
-         console.log("TAP!!");
-         //this.alpha = 0.5;
-     }
-     stage.addChild(button);
-
-
-     // create a texture from an image path
-     var texture = PIXI.Texture.fromImage("joint.png");
-     // create a new Sprite using the texture
-     var bunny = new PIXI.Sprite(texture);
-     var right = true;
-     var hitBoundaries = true;
-     var xDirection = 0;
-     var yDirection = 0;
-     // center the sprites anchor point
-     bunny.anchor.x = 0.5;
-     bunny.anchor.y = 0.5;
-
-     // move the sprite t the center of the screen
-     bunny.position.x = maxWidth / 2;
-     bunny.position.y = maxHeight / 2;
-
-     //stage.addChild(bunny);
-     /*
-     // add the renderer view element to the DOM
-     document.body.appendChild(renderer.view);
-     requestAnimFrame(animate);
-
      //menu bottom width = 1/6
      //menu bottom height = 2/8
 
-     var menuTexture = PIXI.Texture.fromImage("menu.png");
 
-
-     function menu(textureIn) {
-         var texture = textureIn;
-         var positionX;
-         var positionY;
-         var sprite = new PIXI.Sprite(textureIn);
-         
-        
-     }
-
-     var menu1 = new menu(menuTexture);
-
-     menu1.texture = menuTexture;
-     menu1.positionX = 100;
-     menu1.positionY = 200;
-     //menu1.sprite = PIXI.Sprite(menuTexture);
-     stage.addChild(menu1.sprite);
-
+     function animate() {
     
-
-     // create a texture from an image path
-     var texture = PIXI.Texture.fromImage("joint.png");
-     // create a new Sprite using the texture
-     var bunny = new PIXI.Sprite(texture);
-     var right = true;
-     var hitBoundaries = true;
-     var xDirection = 0;
-     var yDirection = 0;
-     // center the sprites anchor point
-     bunny.anchor.x = 0.5;
-     bunny.anchor.y = 0.5;
-     
-     // move the sprite t the center of the screen
-     bunny.position.x = maxWidth / 2;
-     bunny.position.y = maxHeight / 2;
-
-     stage.addChild(bunny);
-        /*
-     function animate() {
-         requestAnimFrame(animate);
-         renderer.render(stage);
-     }
-     */
-     function animate() {
-     /*
          requestAnimFrame(animate);
 
-         if (bunny.position.x >= maxWidth) {
-             hitBoundaries = true;
-         }
-         if (bunny.position.x <= 0) {
-             hitBoundaries = true;
-         }
-         if (bunny.position.y >= maxHeight) {
-             hitBoundaries = true;
-         }
-         if (bunny.position.y <= 0) {
-             hitBoundaries = true;
-         }
-
-         if (hitBoundaries) {
-             var min = -1;
-             var max = 1;
-             xDirection = Math.random() * (max - min) + min;
-             yDirection = Math.random() * (max - min) + min;
-
-             hitBoundaries = false;
-         }
-
-         if (right == true) {
-             bunny.position.x = bunny.position.x + xDirection;
-             bunny.position.y = bunny.position.y + yDirection;
-             bunny.rotation += 0.01;
-
-         }
-
-
-         // render the stage
-         render.render(stage);*/
-         requestAnimFrame(animate);
-
-         // just for fun, lets rotate mr rabbit a little
-         bunny.rotation += 0.1;
-
-         // render the stage
+       
          renderer.render(stage)
      }
      
