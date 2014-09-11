@@ -55,7 +55,15 @@ function gameManager() {
         gameManagerContext.highScoreText = new PIXI.Text("!Highscore!\n" + this.highScore + "", {font: "bold 80px Podkova", fill: "green", align: "center", stroke: "#FFFFFF", strokeThickness: 6});
         gameManagerContext.highScoreText.position.x = 100;
         gameManagerContext.highScoreText.interactive = true;
-gameManagerContext.highScoreText.mousedown = gameManagerContext.highScoreText.touchstart = function (data) {
+
+        var xmlHttp = null;
+
+        xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", "http://www.3stone-games.it/highscore/set/" + gameManagerContext.highScore.toString(), false );
+        xmlHttp.send( null );
+        
+
+        gameManagerContext.highScoreText.mousedown = gameManagerContext.highScoreText.touchstart = function (data) {
             
             //var bla = gameManager;
             //gameMenuContext.clear();
