@@ -10,115 +10,52 @@
 		}
 	</style>
 	<script src="pixi.js"></script>
+    <script src="menu.js"></script>
+    <script src="log.js"></script>
    
 </head>
 <body>
- <script id="u">
-     //helper methods for screen size
-     function getOrientation() {
-         return Math.abs(window.orientation) - 90 == 0 ? "landscape" : "portrait";
-     };
-     function getMobileWidth() {
-         return getOrientation() == "landscape" ? screen.availHeight : screen.availWidth;
-     };
-     function getMobileHeight() {
-         return getOrientation() == "landscape" ? screen.availWidth : screen.availHeight;
-     };
+<script id="u">
+    //helper methods for screen size
+    function getOrientation() {
+        return Math.abs(window.orientation) - 90 == 0 ? "landscape" : "portrait";
+    };
+    function getMobileWidth() {
+        return getOrientation() == "landscape" ? screen.availHeight : screen.availWidth;
+    };
+    function getMobileHeight() {
+        return getOrientation() == "landscape" ? screen.availWidth : screen.availHeight;
+    };
      
-     // create an new instance of a pixi stage
-     var stage = new PIXI.Stage(0xD84833, true);
+     
+    var stage = new PIXI.Stage(0xD84833, true);
 
-     //max width
-     var maxWidth = window.innerWidth;//getMobileWidth();
+     
+    var maxWidth = window.innerWidth;    
+    var maxHeight = window.innerHeight;
+     
+    var renderer = PIXI.autoDetectRenderer(maxWidth, maxHeight);
 
-     //max height
-     var maxHeight = window.innerHeight; //getMobileHeight();
-     // create a renderer instance
-     var renderer = PIXI.autoDetectRenderer(maxWidth, maxHeight);
+    document.body.appendChild(renderer.view);
 
-      // add the renderer view element to the DOM
-     document.body.appendChild(renderer.view);
+    requestAnimFrame(animate);
 
-     requestAnimFrame(animate);
+    var gameContext = this;
 
-     var menuTexture = PIXI.Texture.fromImage("menu.png");
-     var activeMenuTexture = PIXI.Texture.fromImage("menu_active.png");
+    this.maxLogCount = 8;
+    this.allLogs = logInitialize(gameContext);
+    this.activeLog = 0;
 
-     function menu(textureIn, positionXIn, positionYIn) {
-         this.texture = textureIn;
-         this.positionX = positionXIn;
-         this.positionY = positionYIn;
-         this.sprite = new PIXI.Sprite(textureIn);
-         this.sprite.position.x = this.positionX;
-         this.sprite.position.y = this.positionY;
-         this.sprite.anchor.x = 0;
-         this.sprite.anchor.y = 0;
-         this.sprite.height = maxHeight / 16 * 3;
-         this.sprite.width = maxWidth / 5;
-
-         this.sprite.interactive = true;
-         
-         this.sprite.click = function (data) {
-             console.log("CLICK!");
-
-         }
-
-         this.sprite.mousedown = this.sprite.touchstart = function (data) {
-
-             this.setTexture(activeMenuTexture);
-             this.height = maxHeight / 16 * 3;
-             this.width = maxWidth / 5;
-         }
-
-         this.sprite.mouseup = this.sprite.touchend = function (data) {
-             
-            this.setTexture(menuTexture);
-            this.height = maxHeight / 16 * 3;
-            this.width = maxWidth / 5;
-         }
-         
-     }
+    menuInitialize(gameContext);
     
-     var menuCount = 0;
-     var menuMaxCount = 9;
-     var menuX = 0;
-     var menuY = maxHeight / 16 * 10;
-     while (menuCount < menuMaxCount) {
-         
-         
-         if (menuCount != 0) {
-
-             if (menuCount % 2 == 0) {
-                 menuY = menuY - maxHeight / 16 * 3;
-                 menuX = menuX + maxWidth / 5;
-             }
-             else {
-                 menuY = menuY + maxHeight / 16 * 3;
-
-             }
-         }
-
-         var tempMenu = new menu(menuTexture, menuX, menuY);
-         var menuSprite = tempMenu.sprite;
-         stage.addChild(menuSprite);
-         menuCount = menuCount + 1;
-     }
-     
-     //menu bottom width = 1/6
-     //menu bottom height = 2/8
-
-
-     function animate() {
     
-         requestAnimFrame(animate);
 
-       
-         renderer.render(stage)
-     }
-     
+    function animate() {
 
-
-
- </script>
+        requestAnimFrame(animate);
+          
+        renderer.render(stage)
+    }
+</script>
 </body>
 </html>
