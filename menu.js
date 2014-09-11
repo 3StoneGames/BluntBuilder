@@ -15,7 +15,7 @@ function menu(idIn, logManagerContextIn, positionXIn, positionYIn) {
     this.backgroundSprite = generateSprite(this.textureBackground, this.positionX, this.positionY, this.width, this.height);
 
 
-    this.text = new PIXI.Text(this.id + "",{font: "bold 60px Podkova", fill: "#cc00ff", align: "center", stroke: "#FFFFFF", strokeThickness: 6});
+    this.text = new PIXI.Text(this.id + "", { font: "bold italic 18px Arial", fill: "#3e1707", align: "center", stroke: "#a2210e", strokeThickness: 7 });
 
     this.text.position.x = this.positionX + this.sprite.width / 2.4;
     this.text.position.y = this.positionY + this.sprite.height / 3;
@@ -23,7 +23,8 @@ function menu(idIn, logManagerContextIn, positionXIn, positionYIn) {
     this.sprite.interactive = true;
 
     this.sprite.mousedown = this.sprite.touchstart = function (data) {
-       
+        //console.log(menuContext.logManagerContext.activeLog);
+        console.log(gameManager.highScore);
         stage.addChild(menuContext.clickedSprite);
               
         this.height = maxHeight / 16 * 2.5;
@@ -32,12 +33,12 @@ function menu(idIn, logManagerContextIn, positionXIn, positionYIn) {
         
         if (menuContext.id == menuContext.logManagerContext.allLogs[menuContext.logManagerContext.activeLog].value) {
             activeLogEntry.setTrue();
-
+            
             if (menuContext.logManagerContext.maxLogCount == menuContext.logManagerContext.activeLog + 1) {
                 menuContext.logManagerContext.activeLog = 0;
                 menuContext.logManagerContext.setLogs(menuContext.logManagerContext.getNewLogs());
-                highScore += 200;
-                highScoreText.setText(highScore + "");
+                gameManager.highScore += 200;
+                gameManager.highScoreText.setText(gameManager.highScore + "");
                 var count = 0;
                 /*while (count < menuContext.logManagerContext.maxLogCount) {
                     var entry = menuContext.logManagerContext.allLogs[count];
@@ -77,7 +78,7 @@ function menu(idIn, logManagerContextIn, positionXIn, positionYIn) {
 
 }
 
-function menuInitialize(logManagerContext) {
+function menuInitialize(gameManagerContext) {
    
     var menuCount = 0;
     var menuMaxCount = 8;
@@ -94,7 +95,7 @@ function menuInitialize(logManagerContext) {
                 menuY = menuY + maxHeight / 16 * 2.5;
             }
         }
-        var tempMenu = new menu(menuCount + 1, logManagerContext, menuX, menuY);
+        var tempMenu = new menu(menuCount + 1, gameManagerContext.logManager, menuX, menuY);
         var menuSprite = tempMenu.sprite;
         stage.addChild(tempMenu.backgroundSprite);
         stage.addChild(menuSprite);

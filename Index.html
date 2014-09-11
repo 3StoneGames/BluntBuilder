@@ -13,10 +13,13 @@
 		}
 	</style>
 	<script src="pixi.js"></script>
+    <script src="helper.js"></script>
     <script src="menu.js"></script>
     <script src="log.js"></script>
     <script src="logManager.js"></script>
-    <script src="helper.js"></script>
+    <script src="gameManager.js"></script>
+    <script src="gameMenu.js"></script>
+    
    
 </head>
 <body>
@@ -36,16 +39,13 @@
     }
      
      
-    var stage = new PIXI.Stage(0xD84833, true);
+    var stage = new PIXI.Stage(0x004400, true);
 
-    var highScore = 0;
-    var highScoreText = new PIXI.Text(highScore + "", {font: "bold 60px Podkova", fill: "#cc00ff", align: "center", stroke: "#FFFFFF", strokeThickness: 6});
-    
-    highScoreText.position.x = 0;
-    highScoreText.position.y = 0;
-    
-
-    stage.addChild(highScoreText);
+    var gameState = 0;
+    //gamestate 
+    //0 = menu
+    //1 = game
+    //2 = highscore
 
     var renderer = PIXI.autoDetectRenderer(maxWidth, maxHeight);
 
@@ -54,27 +54,62 @@
     requestAnimFrame(animate);
 
     var gameContext = this;
-
     
-    //console.log(values);
-    this.logManager = new logManager();
+    gameManager = new gameManager();
 
-var values = this.logManager.getNewLogs();
+    //this.gameManager.initialize();
     
-    this.logManager.setLogs(values);
-    
-    this.maxLogCount = 3;
 
+    var gameMenu = new gameMenu();
     
-    this.activeLog = 0;
-
-    menuInitialize(logManager);
     
 
     function animate() {
 
         requestAnimFrame(animate);
-          
+        console.log(gameState);
+        if(gameState == 0)
+        {
+            gameManager.clear();
+            gameMenu.initialize();
+        }
+
+        if(gameState == 1)
+        {
+            if(gameManager.isInitialized)
+            {
+                //hier wäre eig. die update funktion
+                var processedTime = Date.now() - gameManager.startTime ;
+                gameManager.timeLeft = gameManager.maxTime - processedTime;
+                gameManager.timeLeftText.setText(gameManager.timeLeft.toString().substring(0,2));
+                if(gameManager.timeLeft < 0)
+                {
+                    gameManager.end();
+                    gameState = 3;
+                }
+            }
+            else
+            {
+                gameMenu.clear();
+                gameManager.initialize();
+            }
+            
+        }
+
+        if(gameState == 3)
+        {
+            if(gameManager.finishedRound)
+            {
+                
+            }
+        }
+
+
+
+
+
+        
+
         renderer.render(stage)
     }
 </script>

@@ -11,3 +11,4 @@ function generateSprite(texture, posX, posY, width, height){
     return sprite;
 }
 
+

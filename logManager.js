@@ -6,7 +6,7 @@ function logManager() {
 
     
     this.activeLog = 0;
-    this.maxLogCount = 0;
+    this.maxLogCount = 8;
    
 
     this.initialize = function () 
@@ -26,12 +26,12 @@ function logManager() {
     //wäre
     this.getNewLogs = function()//customerId o.ä.
     {
-
-        var result = Array(8);
+        
+        var result = Array(this.maxLogCount);
         var counter = 0;
-        while(counter < 8)
+        while(counter < this.maxLogCount)
         {
-            result[counter] = Math.floor((Math.random() * 8) + 1);
+            result[counter] = Math.floor((Math.random() * this.maxLogCount) + 1);
             counter = counter + 1;
 
         }
