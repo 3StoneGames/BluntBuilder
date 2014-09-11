@@ -4,6 +4,12 @@ function log(idIn, valueIn, positionXIn, positionYIn) {
     this.value = valueIn;
     this.texture = PIXI.Texture.fromImage("log.png");
     this.textureTrue = PIXI.Texture.fromImage("log_true.png");
+    if(this.value == 1)
+    {
+        this.textureTrue = PIXI.Texture.fromImage("log_true_1.png")
+        this.texture = PIXI.Texture.fromImage("menu_1.png");
+    }
+    
     this.textureFalse = PIXI.Texture.fromImage("log_false.png");
 
     this.positionX = positionXIn;
@@ -24,6 +30,7 @@ function log(idIn, valueIn, positionXIn, positionYIn) {
 
     this.setTextureTrue = function () {
         this.sprite.setTexture(logContext.textureTrue);
+
         this.height = maxHeight / 16 * 2;
         this.width = maxWidth / 10;
     }

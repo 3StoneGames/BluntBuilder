@@ -3,6 +3,11 @@ function menu(idIn, logManagerContextIn, positionXIn, positionYIn) {
     var menuContext = this;
     this.id = idIn;
     this.texture = PIXI.Texture.fromImage("menu.png");
+    if(this.id == 1)
+    {
+        
+        this.texture = PIXI.Texture.fromImage("menu_1.png");
+    }
     this.clickedTexture = PIXI.Texture.fromImage("menu_active.png");
     this.positionX = positionXIn;
     this.positionY = positionYIn;
