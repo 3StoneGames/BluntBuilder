@@ -2,6 +2,9 @@
 <html>
 <head>
 	<title>Blunt Builder</title>
+    <meta name="viewport" content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
 	<style>
 		body {
 			margin: 0;
@@ -12,27 +15,30 @@
 	<script src="pixi.js"></script>
     <script src="menu.js"></script>
     <script src="log.js"></script>
+    <script src="logManager.js"></script>
    
 </head>
 <body>
 <script id="u">
     //helper methods for screen size
-    function getOrientation() {
-        return Math.abs(window.orientation) - 90 == 0 ? "landscape" : "portrait";
-    };
-    function getMobileWidth() {
-        return getOrientation() == "landscape" ? screen.availHeight : screen.availWidth;
-    };
-    function getMobileHeight() {
-        return getOrientation() == "landscape" ? screen.availWidth : screen.availHeight;
-    };
+var maxWidth = window.innerWidth;    
+    var maxHeight = window.innerHeight;
+    window.addEventListener('orientationchange', handleOrientation, false);
+    function handleOrientation() {
+        if (orientation == 0) {
+            maxWidth = window.innerWidth;    
+    maxHeight = window.innerHeight;
+        } else {
+             maxWidth = window.innerWidth;    
+     maxHeight = window.innerHeight;
+        }
+    }
      
      
     var stage = new PIXI.Stage(0xD84833, true);
 
      
-    var maxWidth = window.innerWidth;    
-    var maxHeight = window.innerHeight;
+    
      
     var renderer = PIXI.autoDetectRenderer(maxWidth, maxHeight);
 
@@ -42,12 +48,21 @@
 
     var gameContext = this;
 
-    this.maxLogCount = 8;
-    this.allLogs = logInitialize(gameContext);
+    
+    //console.log(values);
+    this.logManager = new logManager();
+
+var values = this.logManager.getNewLogs();
+    console.log(values);
+
+    this.logManager.setLogs(values);
+    
+    this.maxLogCount = 3;
+
+    
     this.activeLog = 0;
 
-    menuInitialize(gameContext);
-    
+    menuInitialize(logManager);
     
 
     function animate() {

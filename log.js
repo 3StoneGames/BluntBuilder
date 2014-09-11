@@ -17,7 +17,7 @@ function log(idIn, valueIn, positionXIn, positionYIn) {
     this.sprite.width = maxWidth / 10;
     
     //this.text = new PIXI.BitmapText("Pixi.js can has\nmultiline text!", { font: "35px Snippet", fill: "white", align: "left" });
-    this.text = new PIXI.Text(this.value + "", { font: "bold italic 40px Arvo", fill: "#3e1707", align: "center", stroke: "#a4410e", strokeThickness: 7 });
+    this.text = new PIXI.Text(this.value + "", { font: "bold italic 18px Arvo", fill: "#3e1707", align: "center", stroke: "#a4410e", strokeThickness: 7 });
     
     this.text.position.x = this.positionX + this.sprite.width / 2.4;
     this.text.position.y = this.positionY + this.sprite.height / 3;
@@ -45,13 +45,15 @@ function log(idIn, valueIn, positionXIn, positionYIn) {
 
 }
 
-function logInitialize(gameContext) {
-        
+function logInitialize(valueArray) {
+    
     var logCount = 0;
-    var logMaxCount = 8;
+    var logMaxCount = valueArray.length;
+
     var logX = maxWidth / 5 * 4;
     var logY = maxHeight / 16 * 2.5;
-    var resultArray = new Array(8);
+    var resultArray = new Array(logMaxCount);
+    console.log(valueArray);
     while (logCount < logMaxCount) {
         if (logCount != 0) {
 
@@ -64,8 +66,8 @@ function logInitialize(gameContext) {
                 
             }
         }
-        var randomValue = Math.floor((Math.random() * 8) + 1);
-        var templog = new log(logCount + 1, randomValue, logX, logY);
+        var value = valueArray[logCount];
+        var templog = new log(logCount + 1, value, logX, logY);
         resultArray[logCount] = templog;
         var logSprite = templog.sprite;
         stage.addChild(logSprite);
