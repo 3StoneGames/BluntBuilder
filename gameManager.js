@@ -57,7 +57,6 @@ function gameManager() {
         gameManagerContext.highScoreText.interactive = true;
 
         var xmlHttp = null;
-
         xmlHttp = new XMLHttpRequest();
         xmlHttp.open( "GET", "http://www.3stone-games.it/highscore/set/" + gameManagerContext.highScore.toString(), false );
         xmlHttp.send( null );
