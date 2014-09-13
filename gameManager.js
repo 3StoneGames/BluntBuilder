@@ -56,10 +56,9 @@ function gameManager() {
         gameManagerContext.highScoreText.position.x = 100;
         gameManagerContext.highScoreText.interactive = true;
 
-        var xmlHttp = null;
         xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET", "http://www.3stone-games.it/highscore/set/" + gameManagerContext.highScore.toString(), false );
-        xmlHttp.send( null );
+        xmlHttp.open( "GET", "http://www.3stone-games.it/highscore/set/" + gameManagerContext.highScore.toString(), true );
+        xmlHttp.send(  );
         
 
         gameManagerContext.highScoreText.mousedown = gameManagerContext.highScoreText.touchstart = function (data) {

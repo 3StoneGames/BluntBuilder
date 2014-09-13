@@ -2,9 +2,9 @@ function menu(idIn, logManagerContextIn, positionXIn, positionYIn) {
     this.logManagerContext = logManagerContextIn;
     var menuContext = this;
     this.id = idIn;
-    this.texture = PIXI.Texture.fromImage("/bluntbuilder/menu2.png");
-    this.textureBackground = PIXI.Texture.fromImage("/bluntbuilder/buds/bud" + this.id + ".png");
-    this.clickedTexture = PIXI.Texture.fromImage("/bluntbuilder/menu_active_simple.png");
+    this.texture = PIXI.Texture.fromImage("menu2.png");
+    this.textureBackground = PIXI.Texture.fromImage("buds/bud" + this.id + ".png");
+    this.clickedTexture = PIXI.Texture.fromImage("menu_active_simple.png");
     this.positionX = positionXIn;
     this.positionY = positionYIn;
     this.width = maxWidth / 5;
