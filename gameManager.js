@@ -52,14 +52,27 @@ function gameManager() {
     {
         gameManagerContext.clear();
         gameManagerContext.finishedRound = true;
-        gameManagerContext.highScoreText = new PIXI.Text("!Highscore!\n" + this.highScore + "", {font: "bold 80px Podkova", fill: "green", align: "center", stroke: "#FFFFFF", strokeThickness: 6});
-        gameManagerContext.highScoreText.position.x = 100;
+        gameManagerContext.highScoreText = new PIXI.Text("Highscore: " + "test" + "\n", {font: "bold 60px Podkova", fill: "green", align: "center", stroke: "#FFFFFF", strokeThickness: 6});
+        gameManagerContext.highScoreText.position.x = 20;
         gameManagerContext.highScoreText.interactive = true;
 
+        gameManagerContext.yourScoreText = new PIXI.Text("Your Score: " + this.highScore, {font: "bold 40px Podkova", fill: "green", align: "center", stroke: "#FFFFFF", strokeThickness: 6})
+        gameManagerContext.yourScoreText.position.x = 50;
+        gameManagerContext.yourScoreText.position.y = 80;
         xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET", "http://www.3stone-games.it/highscore/set/" + gameManagerContext.highScore.toString(), true );
-        xmlHttp.send(  );
         
+        
+        xmlHttp.onreadystatechange=function()
+        {
+            if (xmlHttp.readyState==4 && xmlHttp.status==200)
+            {
+                gameManagerContext.highScoreText.setText("Highscore: " + xmlHttp.responseText + "\n", {font: "bold 60px Podkova", fill: "green", align: "center", stroke: "#FFFFFF", strokeThickness: 6})
+                ;
+            }
+        }
+
+        xmlHttp.open( "GET", "http://3stone-games.it/highscore/set/" + gameManagerContext.highScore.toString(), true );
+        xmlHttp.send(  );
 
         gameManagerContext.highScoreText.mousedown = gameManagerContext.highScoreText.touchstart = function (data) {
             
@@ -71,6 +84,7 @@ function gameManager() {
         }
 
         stage.addChild(gameManagerContext.highScoreText);
+        stage.addChild(gameManagerContext.yourScoreText);
     }
 
 }
