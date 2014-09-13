@@ -5,7 +5,7 @@ function gameMenu() {
     
     this.initialize = function () 
     {
-        this.startButtonTexture = PIXI.Texture.fromImage("/bluntbuilder/startbutton.png");
+        this.startButtonTexture = PIXI.Texture.fromImage("startbutton.png");
         this.startButtonSprite = generateSprite(this.startButtonTexture, maxWidth / 2 - 200, maxHeight / 2 - 100, 400, 200); 
         this.startButtonSprite.interactive = true;
         stage.addChild(this.startButtonSprite);

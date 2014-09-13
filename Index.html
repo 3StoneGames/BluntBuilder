@@ -12,13 +12,13 @@
 			background-color: #000000;
 		}
 	</style>
-	<script src="/bluntbuilder/pixi.js"></script>
-    <script src="/bluntbuilder/helper.js"></script>
-    <script src="/bluntbuilder/menu.js"></script>
-    <script src="/bluntbuilder/log.js"></script>
-    <script src="/bluntbuilder/logManager.js"></script>
-    <script src="/bluntbuilder/gameManager.js"></script>
-    <script src="/bluntbuilder/gameMenu.js"></script>
+	<script src="pixi.js"></script>
+    <script src="helper.js"></script>
+    <script src="menu.js"></script>
+    <script src="log.js"></script>
+    <script src="logManager.js"></script>
+    <script src="gameManager.js"></script>
+    <script src="gameMenu.js"></script>
     
    
 </head>
@@ -55,9 +55,8 @@
 
     var gameContext = this;
     
-    gameManager = new gameManager();
+    var gameManager = new gameManager();
 
-    //this.gameManager.initialize();
     
 
     var gameMenu = new gameMenu();
@@ -67,7 +66,7 @@
     function animate() {
 
         requestAnimFrame(animate);
-        console.log(gameState);
+        
         if(gameState == 0)
         {
             gameManager.clear();

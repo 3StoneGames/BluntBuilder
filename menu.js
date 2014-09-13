@@ -22,13 +22,26 @@ function menu(idIn, logManagerContextIn, positionXIn, positionYIn) {
 
     this.sprite.interactive = true;
 
-    this.sprite.mousedown = this.sprite.touchstart = function (data) {
-        //console.log(menuContext.logManagerContext.activeLog);
-        console.log(gameManager.highScore);
+    if(!!('ontouchstart' in window))
+    {
+        this.sprite.touchstart = function (event) {
+            menuClickedEvent(this);       
+        }
+    }
+    else
+    {
+        this.sprite.mousedown = function (event) {
+            menuClickedEvent(this);       
+        }
+    }
+    
+
+    function menuClickedEvent(sprite){
+        //console.log(sprite);
         stage.addChild(menuContext.clickedSprite);
-              
-        this.height = maxHeight / 16 * 2.5;
-        this.width = maxWidth / 5;
+          
+        sprite.height = maxHeight / 16 * 2.5;
+        sprite.width = maxWidth / 5;
         var activeLogEntry = menuContext.logManagerContext.allLogs[menuContext.logManagerContext.activeLog]
         
         if (menuContext.id == menuContext.logManagerContext.allLogs[menuContext.logManagerContext.activeLog].value) {
