@@ -46,12 +46,13 @@ function menu(idIn, logManagerContextIn, positionXIn, positionYIn) {
         
         if (menuContext.id == menuContext.logManagerContext.allLogs[menuContext.logManagerContext.activeLog].value) {
             activeLogEntry.setTrue();
+            gameManager.highScore += 25;
+            gameManager.highScoreText.setText(gameManager.highScore + "");
             
             if (menuContext.logManagerContext.maxLogCount == menuContext.logManagerContext.activeLog + 1) {
                 menuContext.logManagerContext.activeLog = 0;
                 menuContext.logManagerContext.setLogs(menuContext.logManagerContext.getNewLogs());
-                gameManager.highScore += 200;
-                gameManager.highScoreText.setText(gameManager.highScore + "");
+                
                 var count = 0;
                 /*while (count < menuContext.logManagerContext.maxLogCount) {
                     var entry = menuContext.logManagerContext.allLogs[count];

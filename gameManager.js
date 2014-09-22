@@ -9,6 +9,7 @@ function gameManager() {
     
     this.initialize = function () 
     {
+        
         this.startTime = Date.now();
         this.timeLeft = this.maxTime;
         this.highScore = 0;
