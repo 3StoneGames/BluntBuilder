@@ -5,6 +5,7 @@ function gameManager() {
     this.startTime = null;
     this.timeLeft = null;
     this.maxTime = 60000;
+    this.fontDefault = Math.floor(maxWidth / 100);
 
     
     this.initialize = function () 
@@ -13,14 +14,14 @@ function gameManager() {
         this.startTime = Date.now();
         this.timeLeft = this.maxTime;
         this.highScore = 0;
-        this.highScoreText = new PIXI.Text(this.highScore + "", {font: "bold 60px Podkova", fill: "#cc00ff", align: "center", stroke: "#FFFFFF", strokeThickness: 6});
+        this.highScoreText = new PIXI.Text(this.highScore + "", {font: "bold " + gameManager.fontDefault * 3 + "px Podkova", fill: "#cc00ff", align: "center", stroke: "#FFFFFF", strokeThickness: 6});
         
         this.highScoreText.position.x = 0;
         this.highScoreText.position.y = 0;
         
         stage.addChild(this.highScoreText);
 
-        this.timeLeftText = new PIXI.Text(this.timeLeft.toString().substring(0,2), {font: "bold 60px Podkova", fill: "#cc00ff", align: "center", stroke: "#FFFFFF", strokeThickness: 6});
+        this.timeLeftText = new PIXI.Text(this.timeLeft.toString().substring(0,2), {font: "bold "+ gameManager.fontDefault * 3 + "px Podkova", fill: "#cc00ff", align: "center", stroke: "#FFFFFF", strokeThickness: 6});
         this.timeLeftText.position.x = maxWidth / 2;
         this.timeLeftText.position.y = 0;
 
@@ -53,11 +54,11 @@ function gameManager() {
     {
         gameManagerContext.clear();
         gameManagerContext.finishedRound = true;
-        gameManagerContext.highScoreText = new PIXI.Text("Highscore: " + "test" + "\n", {font: "bold 60px Podkova", fill: "green", align: "center", stroke: "#FFFFFF", strokeThickness: 6});
+        gameManagerContext.highScoreText = new PIXI.Text("Highscore: " + "Unknown" + "\n", {font: "bold " + gameManager.fontDefault * 3 + "px Podkova", fill: "green", align: "center", stroke: "#FFFFFF", strokeThickness: 6});
         gameManagerContext.highScoreText.position.x = 20;
         gameManagerContext.highScoreText.interactive = true;
 
-        gameManagerContext.yourScoreText = new PIXI.Text("Your Score: " + this.highScore, {font: "bold 40px Podkova", fill: "green", align: "center", stroke: "#FFFFFF", strokeThickness: 6})
+        gameManagerContext.yourScoreText = new PIXI.Text("Your Score: " + this.highScore, {font: "bold " + gameManager.fontDefault * 3 +"px Podkova", fill: "green", align: "center", stroke: "#FFFFFF", strokeThickness: 6})
         gameManagerContext.yourScoreText.position.x = 50;
         gameManagerContext.yourScoreText.position.y = 80;
         xmlHttp = new XMLHttpRequest();
@@ -67,8 +68,8 @@ function gameManager() {
         {
             if (xmlHttp.readyState==4 && xmlHttp.status==200)
             {
-                gameManagerContext.highScoreText.setText("Highscore: " + xmlHttp.responseText + "\n", {font: "bold 60px Podkova", fill: "green", align: "center", stroke: "#FFFFFF", strokeThickness: 6})
-                ;
+                gameManagerContext.highScoreText.setText("Highscore: " + xmlHttp.responseText + "\n", {font: "bold " + gameManager.fontDefault * 3 + "px Podkova", fill: "green", align: "center", stroke: "#FFFFFF", strokeThickness: 6});
+                
             }
         }
 

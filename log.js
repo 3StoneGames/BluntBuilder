@@ -23,7 +23,7 @@ function log(idIn, valueIn, positionXIn, positionYIn) {
     this.backgroundSprite = generateSprite(this.textureBackground, this.positionX, this.positionY, this.width, this.height);
 
     //this.text = new PIXI.BitmapText("Pixi.js can has\nmultiline text!", { font: "35px Snippet", fill: "white", align: "left" });
-    this.text = new PIXI.Text(this.value + "", { font: "bold italic 18px Arvo", fill: "#3e1707", align: "center", stroke: "#a4410e", strokeThickness: 7 });
+    this.text = new PIXI.Text(this.value + "", { font: "bold italic " + gameManager.fontDefault * 0.9 +"px Arvo", fill: "#3e1707", align: "center", stroke: "#a4410e", strokeThickness: 7 });
     
     this.text.position.x = this.positionX + this.width / 2.4;
     this.text.position.y = this.positionY + this.height / 3;

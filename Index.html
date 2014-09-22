@@ -24,93 +24,94 @@
 </head>
 <body>
 <script id="u">
-    //helper methods for screen size
-    var maxWidth = window.innerWidth;    
-    var maxHeight = window.innerHeight;
-    window.addEventListener('orientationchange', handleOrientation, false);
-    function handleOrientation() {
-        if (orientation == 0) {
-            maxWidth = window.innerWidth;    
-    maxHeight = window.innerHeight;
-        } else {
-             maxWidth = window.innerWidth;    
-     maxHeight = window.innerHeight;
+        //helper methods for screen size
+        var maxWidth = window.innerWidth;
+        var maxHeight = window.innerHeight;
+        
+        window.addEventListener('orientationchange', handleOrientation, false);
+        function handleOrientation() {
+            if (orientation == 0) {
+                maxWidth = window.innerWidth;
+                maxHeight = window.innerHeight;
+            } else {
+                maxWidth = window.innerWidth;
+                maxHeight = window.innerHeight;
+            }
         }
-    }
-     
-     
-    var stage = new PIXI.Stage(0x004400, true);
 
-    var gameState = 0;
-    //gamestate 
-    //0 = menu
-    //1 = game
-    //2 = highscore
 
-    var renderer = PIXI.autoDetectRenderer(maxWidth, maxHeight);
+        var stage = new PIXI.Stage(0x004400, true);
 
-    document.body.appendChild(renderer.view);
+        var gameState = 0;
+        //gamestate 
+        //0 = menu
+        //1 = game
+        //2 = highscore
 
-    requestAnimFrame(animate);
+        var renderer = PIXI.autoDetectRenderer(maxWidth, maxHeight);
 
-    var gameContext = this;
-    
-    var gameManager = new gameManager();
-
-    
-
-    var gameMenu = new gameMenu();
-    
-    
-
-    function animate() {
+        document.body.appendChild(renderer.view);
 
         requestAnimFrame(animate);
-        
-        if(gameState == 0)
-        {
-            gameManager.clear();
-            gameMenu.initialize();
-        }
 
-        if(gameState == 1)
-        {
-            if(gameManager.isInitialized)
-            {
-                //hier wäre eig. die update funktion
-                var processedTime = Date.now() - gameManager.startTime ;
-                gameManager.timeLeft = gameManager.maxTime - processedTime;
-                gameManager.timeLeftText.setText(gameManager.timeLeft.toString().substring(0,2));
-                if(gameManager.timeLeft < 0)
-                {
-                    gameManager.end();
-                    gameState = 3;
+        var gameContext = this;
+
+        var gameManager = new gameManager();
+
+
+
+        var gameMenu = new gameMenu();
+
+
+
+        function animate() {
+
+            requestAnimFrame(animate);
+
+            if (gameState == 0) {
+                gameManager.clear();
+                gameMenu.initialize();
+            }
+
+            if (gameState == 1) {
+                if (gameManager.isInitialized) {
+                    //hier wäre eig. die update funktion
+                    var processedTime = Date.now() - gameManager.startTime;
+                    gameManager.timeLeft = gameManager.maxTime - processedTime;
+                    var highScoreAsText = gameManager.timeLeft;
+
+                    while (highScoreAsText.toString().length < 5) {
+                        highScoreAsText = "0" + highScoreAsText;
+                    }
+
+                    gameManager.timeLeftText.setText(highScoreAsText.toString().substring(0, 2));
+                    
+                    if (gameManager.timeLeft < 0) {
+                        gameManager.end();
+                        gameState = 3;
+                    }
+                }
+                else {
+                    gameMenu.clear();
+                    gameManager.initialize();
+                }
+
+            }
+
+            if (gameState == 3) {
+                if (gameManager.finishedRound) {
+
                 }
             }
-            else
-            {
-                gameMenu.clear();
-                gameManager.initialize();
-            }
-            
+
+
+
+
+
+
+
+            renderer.render(stage)
         }
-
-        if(gameState == 3)
-        {
-            if(gameManager.finishedRound)
-            {
-                
-            }
-        }
-
-
-
-
-
-        
-
-        renderer.render(stage)
-    }
 </script>
 </body>
 </html>

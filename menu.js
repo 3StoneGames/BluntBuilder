@@ -15,7 +15,7 @@ function menu(idIn, logManagerContextIn, positionXIn, positionYIn) {
     this.backgroundSprite = generateSprite(this.textureBackground, this.positionX, this.positionY, this.width, this.height);
 
 
-    this.text = new PIXI.Text(this.id + "", { font: "bold italic 18px Arial", fill: "#3e1707", align: "center", stroke: "#a2210e", strokeThickness: 7 });
+    this.text = new PIXI.Text(this.id + "", { font: "bold italic " + gameManager.fontDefault * 0.9 + "px Arial", fill: "#3e1707", align: "center", stroke: "#a2210e", strokeThickness: 7 });
 
     this.text.position.x = this.positionX + this.sprite.width / 2.4;
     this.text.position.y = this.positionY + this.sprite.height / 3;
@@ -48,7 +48,7 @@ function menu(idIn, logManagerContextIn, positionXIn, positionYIn) {
             activeLogEntry.setTrue();
             gameManager.highScore += 25;
             gameManager.highScoreText.setText(gameManager.highScore + "");
-            
+
             if (menuContext.logManagerContext.maxLogCount == menuContext.logManagerContext.activeLog + 1) {
                 menuContext.logManagerContext.activeLog = 0;
                 menuContext.logManagerContext.setLogs(menuContext.logManagerContext.getNewLogs());
