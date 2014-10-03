@@ -5,19 +5,39 @@ function gameMenu() {
     
     this.initialize = function () 
     {
-        this.startButtonTexture = PIXI.Texture.fromImage(gameManager.imageRootPath + "startbutton.png");
-        this.startButtonSprite = generateSprite(this.startButtonTexture, maxWidth / 2 - 200, maxHeight / 2 - 100, 400, 200); 
-        this.startButtonSprite.interactive = true;
+
+        //GIMMICK START!
+        //------------------------------------------------------------------------------------------------------
+        var budTextures = [];
+        
+        for (var i = 0; i < 9; i++)
+        {           
+            budTextures.push(PIXI.Texture.fromImage(gameManager.imageRootPath + "buds/bud" + i  + ".png"));       
+        }
+
+        buds = new PIXI.MovieClip(budTextures);
+        buds.animationSpeed = 0.1;
+
+        buds.play();//gotoAndPlay(0);
+        stage.addChild(buds);
+
+        buds.position.x = maxWidth / 2 - 200;
+        buds.position.y = maxHeight / 2 - 100;
+        
+        buds.height = 1.9;
+        buds.width = 1.665;
+        //------------------------------------------------------------------------------------------------------
+        //GIMMICK END!
+
+        this.startButtonSprite = generateButtonFromPath(gameManager.imageRootPath + "startbutton2.png", maxWidth / 2 - 200, maxHeight / 2 - 100, 400, 200); 
         stage.addChild(this.startButtonSprite);
 
         gameMenuContext.isInitialized = true;
 
         this.startButtonSprite.mousedown = this.startButtonSprite.touchstart = function (data) {
-            
-            //var bla = gameManager;
+                       
             gameMenuContext.clear();
-            gameState = 1;
-            //gameMenuContext.clear();
+            gameState = 1;            
         }
 
 

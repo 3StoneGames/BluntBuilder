@@ -1,6 +1,6 @@
 function gameManager() {
     var gameManagerContext = this;
-    this.isInitialized = false;
+    this.roundStarted = false;
     this.finishedRound = false;
     this.startTime = null;
     this.timeLeft = null;
@@ -33,39 +33,39 @@ function gameManager() {
         stage.addChild(this.timeLeftText);
 
         this.logManager = new logManager();
-
-        var values = this.logManager.getNewLogs();
-        
-        this.logManager.setLogs(values);
+        this.logManager.initialize();
+       
         
         menuInitialize(this);
 
-        gameManagerContext.isInitialized = true;
+        gameManagerContext.roundStarted = true;
     };
 
     this.clear = function()
     {
-        this.logManager = null;
         this.startTime = null;
         this.timeLeft = null;
         while(stage.children.length > 0){ 
           var child = stage.getChildAt(0);
           stage.removeChild(child);
         }
-        gameManagerContext.isInitialized = false;
+        gameManagerContext.roundStarted = false;
+
     }
+
+
 
     this.end = function()
     {
-        gameManagerContext.clear();
-        gameManagerContext.finishedRound = true;
-        gameManagerContext.highScoreText = new PIXI.Text("Highscore: " + "Unknown" + "\n", {font: "bold " + gameManager.fontDefault * 3 + "px Podkova", fill: "green", align: "center", stroke: "#FFFFFF", strokeThickness: 6});
-        gameManagerContext.highScoreText.position.x = 20;
-        gameManagerContext.highScoreText.interactive = true;
+        this.clear();
+        this.finishedRound = true;
+        this.highScoreText = new PIXI.Text("Highscore: " + "Unknown" + "\n", {font: "bold " + gameManager.fontDefault * 3 + "px Podkova", fill: "green", align: "center", stroke: "#FFFFFF", strokeThickness: 6});
+        this.highScoreText.position.x = 20;
+        this.highScoreText.interactive = true;
 
-        gameManagerContext.yourScoreText = new PIXI.Text("Your Score: " + this.highScore, {font: "bold " + gameManager.fontDefault * 3 +"px Podkova", fill: "green", align: "center", stroke: "#FFFFFF", strokeThickness: 6})
-        gameManagerContext.yourScoreText.position.x = 50;
-        gameManagerContext.yourScoreText.position.y = 80;
+        this.yourScoreText = new PIXI.Text("Your Score: " + this.highScore, {font: "bold " + gameManager.fontDefault * 3 +"px Podkova", fill: "green", align: "center", stroke: "#FFFFFF", strokeThickness: 6})
+        this.yourScoreText.position.x = 50;
+        this.yourScoreText.position.y = 80;
         xmlHttp = new XMLHttpRequest();
         
         
@@ -73,6 +73,7 @@ function gameManager() {
         {
             if (xmlHttp.readyState==4 && xmlHttp.status==200)
             {
+                gameManager.changeScore()
                 gameManagerContext.highScoreText.setText("Highscore: " + xmlHttp.responseText + "\n", {font: "bold " + gameManager.fontDefault * 3 + "px Podkova", fill: "green", align: "center", stroke: "#FFFFFF", strokeThickness: 6});
                 
             }
@@ -81,17 +82,43 @@ function gameManager() {
         xmlHttp.open( "GET", "http://3stone-games.it/highscore/set/" + gameManagerContext.highScore.toString(), true );
         xmlHttp.send(  );
 
-        gameManagerContext.highScoreText.mousedown = gameManagerContext.highScoreText.touchstart = function (data) {
-            
-            //var bla = gameManager;
-            //gameMenuContext.clear();
-            
-            gameState = 1;
-            //gameMenuContext.clear();
+        gameManagerContext.highScoreText.mousedown = gameManagerContext.highScoreText.touchstart = function (data) {     
+            gameState = 1;   
         }
 
         stage.addChild(gameManagerContext.highScoreText);
         stage.addChild(gameManagerContext.yourScoreText);
+
+        gameState = 3;
+    }
+
+    this.addScore = function(amount)
+    {
+        this.highScore += amount;
+        this.highScoreText.setText(gameManager.highScore + "");
+    }
+
+    this.changeScore = function(score)
+    {
+        this.highScore = amount;
+        this.highScoreText.setText(gameManager.highScore + "");
+    }
+
+    this.animate = function()
+    {
+        var processedTime = Date.now() - this.startTime;
+        this.timeLeft = this.maxTime - processedTime;
+        var highScoreAsText = this.timeLeft;
+
+        while (highScoreAsText.toString().length < 5) {
+            highScoreAsText = "0" + highScoreAsText;
+        }
+
+        gameManager.timeLeftText.setText(highScoreAsText.toString().substring(0, 2));
+
+        if (gameManager.timeLeft < 0) {
+            gameManager.end();                        
+        }
     }
 
 }

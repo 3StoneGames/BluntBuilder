@@ -2,74 +2,58 @@ function menu(idIn, logManagerContextIn, positionXIn, positionYIn) {
     this.logManagerContext = logManagerContextIn;
     var menuContext = this;
     this.id = idIn;
-    this.texture = PIXI.Texture.fromImage(gameManager.imageRootPath + "menu2.png");
-    this.textureBackground = PIXI.Texture.fromImage(gameManager.imageRootPath + "buds/bud" + this.id + ".png");
-    this.clickedTexture = PIXI.Texture.fromImage(gameManager.imageRootPath + "menu_active_simple.png");
     this.positionX = positionXIn;
     this.positionY = positionYIn;
     this.width = maxWidth / 5;
     this.height = maxHeight / 16 * 2.5;
 
-    this.sprite = generateSprite(this.texture, this.positionX, this.positionY, this.width, this.height); 
-    this.clickedSprite =  generateSprite(this.clickedTexture, this.positionX, this.positionY, this.width, this.height); 
-    this.backgroundSprite = generateSprite(this.textureBackground, this.positionX, this.positionY, this.width, this.height);
+    this.sprite = generateButtonFromPath(gameManager.imageRootPath + "menu2.png", this.positionX, this.positionY, this.width, this.height); 
+    this.clickedSprite =  generateSpriteFromPath(gameManager.imageRootPath + "menu_active_simple.png", this.positionX, this.positionY, this.width, this.height); 
+    this.backgroundSprite = generateSpriteFromPath(gameManager.imageRootPath + "buds/bud" + this.id + ".png", this.positionX, this.positionY, this.width, this.height);
 
 
     this.text = new PIXI.Text(this.id + "", { font: "bold italic " + gameManager.fontDefault * 0.9 + "px Arial", fill: "#3e1707", align: "center", stroke: "#a2210e", strokeThickness: 7 });
 
     this.text.position.x = this.positionX + this.sprite.width / 2.4;
     this.text.position.y = this.positionY + this.sprite.height / 3;
-
-    this.sprite.interactive = true;
+ 
 
     if(!!('ontouchstart' in window))
     {
         this.sprite.touchstart = function (event) {
-            menuClickedEvent(this);       
+            menuClickedEvent();       
         }
     }
     else
     {
         this.sprite.mousedown = function (event) {
-            menuClickedEvent(this);       
+            menuClickedEvent();       
         }
     }
     
 
-    function menuClickedEvent(sprite){
-        //console.log(sprite);
+    function menuClickedEvent(){
         stage.addChild(menuContext.clickedSprite);
           
-        sprite.height = maxHeight / 16 * 2.5;
-        sprite.width = maxWidth / 5;
         var activeLogEntry = menuContext.logManagerContext.allLogs[menuContext.logManagerContext.activeLog]
         
-        if (menuContext.id == menuContext.logManagerContext.allLogs[menuContext.logManagerContext.activeLog].value) {
+        //check if click is correct
+        if (menuContext.id == activeLogEntry.value) {
             activeLogEntry.setTrue();
-            gameManager.highScore += 25;
-            gameManager.highScoreText.setText(gameManager.highScore + "");
-
+                
+            //checked all logs correct
             if (menuContext.logManagerContext.maxLogCount == menuContext.logManagerContext.activeLog + 1) {
                 menuContext.logManagerContext.activeLog = 0;
-                menuContext.logManagerContext.setLogs(menuContext.logManagerContext.getNewLogs());
-                
-                var count = 0;
-                /*while (count < menuContext.logManagerContext.maxLogCount) {
-                    var entry = menuContext.logManagerContext.allLogs[count];
-                    entry.setTextureNormal();
-                    count = count + 1;
-                }*/              
+
+                //instead there should be the next customer in the queue
+                menuContext.logManagerContext.setLogs(menuContext.logManagerContext.getNewLogs());                
             }
             else {
-
-                menuContext.logManagerContext.activeLog = menuContext.logManagerContext.activeLog + 1;
-
+                menuContext.logManagerContext.activeLog += 1
             }
         }
         else {
-            activeLogEntry.setFalse();
-            gameManager.highScore -= 20;
-            gameManager.highScoreText.setText(gameManager.highScore + "");
+            activeLogEntry.setFalse();            
         }
     }
 

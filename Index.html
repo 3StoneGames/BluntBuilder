@@ -19,6 +19,7 @@
     <script src="logManager.js"></script>
     <script src="gameManager.js"></script>
     <script src="gameMenu.js"></script>
+    <link rel="stylesheet" href="magic.css">
     
    
 </head>
@@ -38,6 +39,7 @@
                 maxHeight = window.innerHeight;
             }
         }
+
 
 
         var stage = new PIXI.Stage(0x004400, true);
@@ -68,40 +70,30 @@
 
             requestAnimFrame(animate);
 
+            //not started
             if (gameState == 0) {
-                gameManager.clear();
-                gameMenu.initialize();
+                
+                if(!gameMenu.isInitialized)
+                {
+                    gameManager.clear();
+                    gameMenu.initialize();
+                }
+                
             }
-
+            //started
             if (gameState == 1) {
-                if (gameManager.isInitialized) {
-                    //hier wäre eig. die update funktion
-                    var processedTime = Date.now() - gameManager.startTime;
-                    gameManager.timeLeft = gameManager.maxTime - processedTime;
-                    var highScoreAsText = gameManager.timeLeft;
-
-                    while (highScoreAsText.toString().length < 5) {
-                        highScoreAsText = "0" + highScoreAsText;
-                    }
-
-                    gameManager.timeLeftText.setText(highScoreAsText.toString().substring(0, 2));
-                    
-                    if (gameManager.timeLeft < 0) {
-                        gameManager.end();
-                        gameState = 3;
-                    }
+                if (!gameManager.roundStarted) {
+                    gameManager.clear();
+                    gameManager.initialize();
                 }
                 else {
-                    gameMenu.clear();
-                    gameManager.initialize();
+                    gameManager.animate();                    
                 }
 
             }
 
             if (gameState == 3) {
-                if (gameManager.finishedRound) {
-
-                }
+                //highscore is shown
             }
 
 

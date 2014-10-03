@@ -1,5 +1,6 @@
-function generateSprite(texture, posX, posY, width, height){
+function generateSpriteFromPath(path, posX, posY, width, height){
 
+	var texture = PIXI.Texture.fromImage(path);
     var sprite = new PIXI.Sprite(texture);
     sprite.position.x = posX;
     sprite.position.y = posY;
@@ -7,6 +8,14 @@ function generateSprite(texture, posX, posY, width, height){
     sprite.anchor.y = 0;
     sprite.height = height;
     sprite.width = width;
+
+    return sprite;
+}
+
+function generateButtonFromPath(path, posX, posY, width, height){
+
+	var sprite = generateSpriteFromPath(path, posX, posY, width, height);
+	sprite.interactive = true;
 
     return sprite;
 }
