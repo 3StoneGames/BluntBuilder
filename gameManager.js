@@ -6,7 +6,12 @@ function gameManager() {
     this.timeLeft = null;
     this.maxTime = 60000;
     this.fontDefault = Math.floor(maxWidth / 100);
-
+    this.releaseMode = false;
+    this.imageRootPath = "";
+    if(this.releaseMode)
+    {
+        this.imageRootPath = "/bluntbuilder/"
+    }
     
     this.initialize = function () 
     {

@@ -2,11 +2,11 @@ function log(idIn, valueIn, positionXIn, positionYIn) {
     var logContext = this;
     this.id = idIn;
     this.value = valueIn;
-    this.frameTexture = PIXI.Texture.fromImage("/bluntbuilder/log2.png");
+    this.frameTexture = PIXI.Texture.fromImage(gameManager.imageRootPath + "log2.png");
     //this.textureIndicatorNormal = PIXI.Texture.fromImage("leaf_empty.png");
-    this.textureIndicatorTrue = PIXI.Texture.fromImage("/bluntbuilder/leaf_true.png");
-    this.textureIndicatorFalse = PIXI.Texture.fromImage("/bluntbuilder/leaf_false.png");
-    this.textureBackground = PIXI.Texture.fromImage("/bluntbuilder/buds/bud" + this.value + ".png");
+    this.textureIndicatorTrue = PIXI.Texture.fromImage(gameManager.imageRootPath + "leaf_true.png");
+    this.textureIndicatorFalse = PIXI.Texture.fromImage(gameManager.imageRootPath + "leaf_false.png");
+    this.textureBackground = PIXI.Texture.fromImage(gameManager.imageRootPath + "buds/bud" + this.value + ".png");
 
     this.positionX = positionXIn;
     this.positionY = positionYIn;
