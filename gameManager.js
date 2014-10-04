@@ -100,7 +100,7 @@ function gameManager() {
 
     this.changeScore = function(score)
     {
-        this.highScore = amount;
+        this.highScore = score;
         this.highScoreText.setText(gameManager.highScore + "");
     }
 
