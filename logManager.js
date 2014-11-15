@@ -7,7 +7,7 @@ function logManager() {
 
     this.initialize = function () 
     {
-        var values = this.getNewLogs();        
+        var values = this.getNewLogs();//hier wird er dann "GetNextCustomer" machen    
         this.setLogs(values);
    
     };

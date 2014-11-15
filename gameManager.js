@@ -6,7 +6,7 @@ function gameManager() {
     this.timeLeft = null;
     this.maxTime = 60000;
     this.fontDefault = Math.floor(maxWidth / 100);
-    this.releaseMode = false;
+    this.releaseMode = true;
     this.imageRootPath = "";
     if(this.releaseMode)
     {
@@ -15,7 +15,6 @@ function gameManager() {
     
     this.initialize = function () 
     {
-        
         this.startTime = Date.now();
         this.timeLeft = this.maxTime;
         this.highScore = 0;
@@ -31,6 +30,9 @@ function gameManager() {
         this.timeLeftText.position.y = 0;
 
         stage.addChild(this.timeLeftText);
+
+        this.customerManager = new customerManager();
+        this.customerManager.initialize();
 
         this.logManager = new logManager();
         this.logManager.initialize();
@@ -65,10 +67,9 @@ function gameManager() {
 
         this.yourScoreText = new PIXI.Text("Your Score: " + this.highScore, {font: "bold " + gameManager.fontDefault * 3 +"px Podkova", fill: "green", align: "center", stroke: "#FFFFFF", strokeThickness: 6})
         this.yourScoreText.position.x = 50;
-        this.yourScoreText.position.y = 80;
+        this.yourScoreText.position.y = 80;        
+        
         xmlHttp = new XMLHttpRequest();
-        
-        
         xmlHttp.onreadystatechange=function()
         {
             if (xmlHttp.readyState==4 && xmlHttp.status==200)
