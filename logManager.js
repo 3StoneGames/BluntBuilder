@@ -3,10 +3,11 @@ function logManager() {
      
     this.activeLog = 0;
     this.maxLogCount = 8;
-   
+    
 
-    this.initialize = function () 
+    this.initialize = function (customerManagerContext) 
     {
+        this.CustomerManagerContext = customerManagerContext;
         var values = this.getNewLogs();//hier wird er dann "GetNextCustomer" machen    
         this.setLogs(values);
    
@@ -22,7 +23,10 @@ function logManager() {
     //wäre
     this.getNewLogs = function()//customerId o.ä.
     {
-        
+
+        return this.CustomerManagerContext.getNextCustomer();
+
+        /*
         var result = Array(this.maxLogCount);
         var counter = 0;
         while(counter < this.maxLogCount)
@@ -32,7 +36,7 @@ function logManager() {
 
         }
         
-        return result;
+        return result;*/
     }
 
     this.initializeLogs = function(valueArray)

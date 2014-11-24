@@ -35,7 +35,7 @@ function gameManager() {
         this.customerManager.initialize();
 
         this.logManager = new logManager();
-        this.logManager.initialize();
+        this.logManager.initialize(this.customerManager);
        
         
         menuInitialize(this);
