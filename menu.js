@@ -45,7 +45,7 @@ function menu(idIn, logManagerContextIn, positionXIn, positionYIn) {
             if (menuContext.logManagerContext.maxLogCount == menuContext.logManagerContext.activeLog + 1) {
                 menuContext.logManagerContext.activeLog = 0;
 
-                //instead there should be the next customer in the queue
+                //instead there should be the next customer in the queue                
                 menuContext.logManagerContext.setLogs(menuContext.logManagerContext.getNewLogs());                
             }
             else {

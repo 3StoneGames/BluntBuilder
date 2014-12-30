@@ -10,7 +10,10 @@ function gameManager() {
     this.imageRootPath = "";
     if(this.releaseMode)
     {
-        this.imageRootPath = "/bluntbuilder/"
+        //local mit vs "/bluntbuilder/"
+        //local ohne vs ""
+        //für android compilen "img/"
+        this.imageRootPath = "img/";
     }
     
     this.initialize = function () 
@@ -68,7 +71,7 @@ function gameManager() {
         this.yourScoreText = new PIXI.Text("Your Score: " + this.highScore, {font: "bold " + gameManager.fontDefault * 3 +"px Podkova", fill: "green", align: "center", stroke: "#FFFFFF", strokeThickness: 6})
         this.yourScoreText.position.x = 50;
         this.yourScoreText.position.y = 80;        
-        
+        /*
         xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange=function()
         {
@@ -82,7 +85,7 @@ function gameManager() {
 
         xmlHttp.open( "GET", "http://3stone-games.it/highscore/set/" + gameManagerContext.highScore.toString(), true );
         xmlHttp.send(  );
-
+*/
         gameManagerContext.highScoreText.mousedown = gameManagerContext.highScoreText.touchstart = function (data) {     
             gameState = 1;   
         }
@@ -109,13 +112,18 @@ function gameManager() {
     {
         var processedTime = Date.now() - this.startTime;
         this.timeLeft = this.maxTime - processedTime;
-        var highScoreAsText = this.timeLeft;
+        var timeleftAsText = this.timeLeft;
 
-        while (highScoreAsText.toString().length < 5) {
-            highScoreAsText = "0" + highScoreAsText;
+
+        while (timeleftAsText.toString().length < 5) {
+            timeleftAsText = "0" + timeleftAsText;
         }
 
-        gameManager.timeLeftText.setText(highScoreAsText.toString().substring(0, 2));
+        var timeLeftAsTextInSeconds = timeleftAsText.toString().substring(0, 2);
+        gameManager.timeLeftText.setText(timeLeftAsTextInSeconds);
+        
+        this.customerManager.animate(this.timeLeft / 1000);
+
 
         if (gameManager.timeLeft < 0) {
             gameManager.end();                        

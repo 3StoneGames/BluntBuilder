@@ -1,9 +1,12 @@
 function customerManager() {
     var customerManagerContext = this;
     this.CustomerServedCount = 0;
+    this.CustomerSpawnedCount = 0;
+
     this.initialize = function () //wahrscheinlich würd man hier noch das lvl reingeben
     {
-        this.customers = this.getCustomers();
+        this.Customers = this.getCustomers();
+        this.SpawnedCustomers = Array(this.Customers.length)
     };
 
     // gibt ein array an customers zurück
@@ -13,7 +16,7 @@ function customerManager() {
     this.getCustomers = function()//wahrscheinlich würd man hier noch das lvl reingeben
     {
         //check das lvl und dann
-        var levelCustomerMaxCount = 3;
+        var levelCustomerMaxCount = 30;
         var result = Array(levelCustomerMaxCount);
         var customerCount = 0;
         var ingredientsCount = 8;
@@ -31,7 +34,7 @@ function customerManager() {
             }            
 
             result[customerCount] = new customer();
-            result[customerCount].initialize(customerCount, 60-customerCount, ingredients);
+            result[customerCount].initialize(customerCount, 60-customerCount*3, ingredients);
             customerCount = customerCount+1;
         }
 
@@ -41,10 +44,21 @@ function customerManager() {
 
     this.getNextCustomer = function()
     {
-        var customerCount = customerManagerContext.customers.length;
+        var customerCount = customerManagerContext.Customers.length;
         if(customerCount > 0)
         {
-            var ingredients = customerManagerContext.customers[this.CustomerServedCount].Ingredients;
+            if(this.CustomerServedCount >= 1)
+            {
+                var servedCustomerEntry = customerManagerContext.Customers[this.CustomerServedCount - 1];
+                if(servedCustomerEntry != undefined)
+                {
+                    servedCustomerEntry.setServed();
+                }
+            }
+
+            var customerEntry = customerManagerContext.Customers[this.CustomerServedCount];
+            console.log(customerEntry.SpawnTime);
+            var ingredients = customerEntry.Ingredients;
             var ingredientsCount = ingredients.length;
             var result = Array(ingredientsCount);
 
@@ -55,8 +69,11 @@ function customerManager() {
                 result[count] = temp.split('-')[1]
                 count = count+1;
             }
+            this.SpawnedCustomers[this.CustomerServedCount] = customerEntry;
+            console.log(this.SpawnedCustomers[this.CustomerServedCount]);
             this.CustomerServedCount = this.CustomerServedCount + 1;
             console.log(result);
+           
 
             return result;
 
@@ -69,6 +86,40 @@ function customerManager() {
         //kommt jetzt ein einfaches array mit den nummern zurücl
         //würde später ein vollständiger customer und seine kategorien/art des zu drückenden
     };
+
+    this.animate = function(timeLeft)
+    {
+        var customerCount = customerManagerContext.Customers.length;
+        
+        if(customerCount > 0)
+        {
+            var count = this.CustomerSpawnedCount;
+
+            while(count < customerCount)
+            {
+                var customerEntry = customerManagerContext.Customers[count];
+                if(customerEntry == undefined)
+                {
+                    console.log("no customer found, return (customer manager : animate)");
+                    return true;
+                }
+                    
+
+                if(customerEntry.SpawnTime > timeLeft)
+                {
+                    customerManagerContext.SpawnedCustomers[count] = customerEntry;
+                    customerEntry.spawn();
+                    this.CustomerSpawnedCount = this.CustomerSpawnedCount + 1;
+                    console.log("added" + count);
+                }
+                count = count + 1;
+
+            }
+        }
+
+        var spawnedCustomerCount = customerManagerContext.SpawnedCustomers.length;
+        
+    }
 
 
 }
