@@ -1,4 +1,4 @@
-﻿<!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <html>
 <head>
 	<title>Blunt Builder</title>
@@ -20,6 +20,7 @@
     <script src="gameManager.js"></script>
     <script src="gameMenu.js"></script>
     <script src="customerManager.js"></script>
+    <script src="customer.js"></script>
     <link rel="stylesheet" href="magic.css">
     
    
@@ -41,8 +42,6 @@
             }
         }
 
-
-
         var stage = new PIXI.Stage(0x004400, true);
 
         var gameState = 0;
@@ -60,12 +59,8 @@
         var gameContext = this;
 
         var gameManager = new gameManager();
-
-
-
         var gameMenu = new gameMenu();
-
-
+        var highScoreMenu = new highScoreMenu();
 
         function animate() {
 
@@ -93,8 +88,16 @@
 
             }
 
-            if (gameState == 3) {
+            if (gameState == 2) {
                 //highscore is shown
+            }
+
+            if(gameState == 3) {
+                if(!highScoreMenu.isInitialized)
+                {
+                    gameManager.clear();
+                    highScoreMenu.initialize();                    
+                }
             }
 
 

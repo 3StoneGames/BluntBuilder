@@ -6,14 +6,14 @@ function gameManager() {
     this.timeLeft = null;
     this.maxTime = 60000;
     this.fontDefault = Math.floor(maxWidth / 100);
-    this.releaseMode = true;
-    this.imageRootPath = "";
+    this.releaseMode = false;
+    this.imageRootPath = "/bluntbuilder/";
     if(this.releaseMode)
     {
         //local mit vs "/bluntbuilder/"
         //local ohne vs ""
         //für android compilen "img/"
-        this.imageRootPath = "img/";
+        this.imageRootPath = "/bluntbuilder/";
     }
     
     this.initialize = function () 
@@ -28,7 +28,7 @@ function gameManager() {
         
         stage.addChild(this.highScoreText);
 
-        this.timeLeftText = new PIXI.Text(this.timeLeft.toString().substring(0,2), {font: "bold "+ gameManager.fontDefault * 3 + "px Podkova", fill: "#cc00ff", align: "center", stroke: "#FFFFFF", strokeThickness: 6});
+        this.timeLeftText = new PIXI.Text(this.timeLeft.toString().substring(0,2), {font: "bold " + gameManager.fontDefault * 3 + "px Podkova", fill: "#cc00ff", align: "center", stroke: "#FFFFFF", strokeThickness: 6});
         this.timeLeftText.position.x = maxWidth / 2;
         this.timeLeftText.position.y = 0;
 
@@ -41,6 +41,7 @@ function gameManager() {
         this.logManager.initialize(this.customerManager);
        
         
+
         menuInitialize(this);
 
         gameManagerContext.roundStarted = true;
@@ -71,7 +72,7 @@ function gameManager() {
         this.yourScoreText = new PIXI.Text("Your Score: " + this.highScore, {font: "bold " + gameManager.fontDefault * 3 +"px Podkova", fill: "green", align: "center", stroke: "#FFFFFF", strokeThickness: 6})
         this.yourScoreText.position.x = 50;
         this.yourScoreText.position.y = 80;        
-        /*
+         
         xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange=function()
         {
@@ -81,11 +82,19 @@ function gameManager() {
                 gameManagerContext.highScoreText.setText("Highscore: " + xmlHttp.responseText + "\n", {font: "bold " + gameManager.fontDefault * 3 + "px Podkova", fill: "green", align: "center", stroke: "#FFFFFF", strokeThickness: 6});
                 
             }
+        }       
+
+        if(this.releaseMode)
+        {
+            xmlHttp.open( "GET", "http://3stone-games.it/highscore/set/" + gameManagerContext.highScore.toString(), true );            
+        }
+        else
+        {
+            xmlHttp.open( "GET", "http://localhost:54513/highscore/set/" + gameManagerContext.highScore.toString(), true);
         }
 
-        xmlHttp.open( "GET", "http://3stone-games.it/highscore/set/" + gameManagerContext.highScore.toString(), true );
         xmlHttp.send(  );
-*/
+
         gameManagerContext.highScoreText.mousedown = gameManagerContext.highScoreText.touchstart = function (data) {     
             gameState = 1;   
         }
@@ -93,7 +102,7 @@ function gameManager() {
         stage.addChild(gameManagerContext.highScoreText);
         stage.addChild(gameManagerContext.yourScoreText);
 
-        gameState = 3;
+        gameState = 2;
     }
 
     this.addScore = function(amount)

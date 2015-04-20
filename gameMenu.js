@@ -29,6 +29,19 @@ function gameMenu() {
         //------------------------------------------------------------------------------------------------------
         //GIMMICK END!
 
+        this.menuHighScoreText = new PIXI.Text("HighScores", {font: "bold " + gameManager.fontDefault * 3 + "px Podkova", fill: "#cc00ff", align: "center", stroke: "#FFFFFF", strokeThickness: 6});
+        
+        this.menuHighScoreText.position.x = maxWidth / 2 - 150;
+        this.menuHighScoreText.position.y = maxHeight / 2 + 150;
+        this.menuHighScoreText.interactive = true;
+
+        this.menuHighScoreText.mousedown = this.menuHighScoreText.touchstart = function (data) {
+            gameMenuContext.clear();
+            gameState = 3;
+        }
+
+        stage.addChild(this.menuHighScoreText);
+
         this.startButtonSprite = generateButtonFromPath(gameManager.imageRootPath + "startbutton2.png", maxWidth / 2 - 200, maxHeight / 2 - 100, 400, 200); 
         stage.addChild(this.startButtonSprite);
 

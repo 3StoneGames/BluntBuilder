@@ -48,6 +48,7 @@ function logManager() {
         var logY = maxHeight / 16 * 2.5;
         var resultArray = new Array(logMaxCount);
         
+        //code für darstellung des logs
         while (logCount < logMaxCount) {
             if (logCount != 0) {
 
