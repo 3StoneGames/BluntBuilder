@@ -17,14 +17,14 @@ function customer() {
     {
         this.Served = true;
         stage.removeChild(this.NormalSprite);
-        console.log("removed");
+        //console.log("removed");
         
         stage.addChild(this.ServedSprite);
     };
 
     this.spawn = function()
     {
-        console.log("spawn");
+        //console.log("spawn");
         stage.addChild(this.NormalSprite);
     }
 

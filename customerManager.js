@@ -57,7 +57,7 @@ function customerManager() {
             }
 
             var customerEntry = customerManagerContext.Customers[this.CustomerServedCount];
-            console.log(customerEntry.SpawnTime);
+            //console.log(customerEntry.SpawnTime);
             var ingredients = customerEntry.Ingredients;
             var ingredientsCount = ingredients.length;
             var result = Array(ingredientsCount);
@@ -70,9 +70,9 @@ function customerManager() {
                 count = count+1;
             }
             this.SpawnedCustomers[this.CustomerServedCount] = customerEntry;
-            console.log(this.SpawnedCustomers[this.CustomerServedCount]);
+            //console.log(this.SpawnedCustomers[this.CustomerServedCount]);
             this.CustomerServedCount = this.CustomerServedCount + 1;
-            console.log(result);
+            //console.log(result);
            
 
             return result;
@@ -110,7 +110,7 @@ function customerManager() {
                     customerManagerContext.SpawnedCustomers[count] = customerEntry;
                     customerEntry.spawn();
                     this.CustomerSpawnedCount = this.CustomerSpawnedCount + 1;
-                    console.log("added" + count);
+                    //console.log("added" + count);
                 }
                 count = count + 1;
 

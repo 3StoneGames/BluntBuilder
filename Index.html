@@ -21,6 +21,9 @@
     <script src="gameMenu.js"></script>
     <script src="customerManager.js"></script>
     <script src="customer.js"></script>
+    <script src="highScoreMenu.js"></script>
+    <script src="gameMap.js"></script>
+    <script src="gameMapTile.js"></script>
     <link rel="stylesheet" href="magic.css">
     
    
@@ -45,10 +48,14 @@
         var stage = new PIXI.Stage(0x004400, true);
 
         var gameState = 0;
+
+        var currentLevel = 0;
         //gamestate 
         //0 = menu
         //1 = game
-        //2 = highscore
+        //2 = highscore at end of game
+        //3 = highscore list
+        //4 = map
 
         var renderer = PIXI.autoDetectRenderer(maxWidth, maxHeight);
 
@@ -61,9 +68,10 @@
         var gameManager = new gameManager();
         var gameMenu = new gameMenu();
         var highScoreMenu = new highScoreMenu();
+        var gameMap = new gameMap();
 
         function animate() {
-
+            console.log(gameState);
             requestAnimFrame(animate);
 
             //not started
@@ -76,6 +84,15 @@
                 }
                 
             }
+            if(gameState == 4)
+            {
+                if(!gameMap.isInitialized)
+                {
+                    gameManager.clear();
+                    gameMap.initialize();
+                }
+            }
+
             //started
             if (gameState == 1) {
                 if (!gameManager.roundStarted) {

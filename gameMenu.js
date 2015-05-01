@@ -50,7 +50,7 @@ function gameMenu() {
         this.startButtonSprite.mousedown = this.startButtonSprite.touchstart = function (data) {
                        
             gameMenuContext.clear();
-            gameState = 1;            
+            gameState = 4;            
         }
 
 
