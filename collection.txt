@@ -1,0 +1,67 @@
+Shape
+	
+	Normal
+	Keule
+	Spliff
+	Holländsch
+	Jumbo
+	Tulpe
+	Diamant
+	Blunt
+	Agent
+	Windmühle
+
+Tip
+	Normal
+	ConeTip
+	AKtivKohle
+	MusterImTip	möglichkeit auf prem kram
+	Holz
+	Glas
+
+Paper
+	Normal
+	Hanfblatt
+	Rice
+	Cellulose	möglichkeit auf prem (farbig)
+	Bambus
+	TabakPapier	
+	GeschmackPaper	möglichkeit auf prem kram
+	MusterDrin	möglichkeit auf prem kram
+	
+
+Tabak
+	Schwarzen
+	Mittleren
+	Hellen
+	Knaster
+	MellowYellow
+	GreenGo
+	
+Gras
+	Hamburger Hecke
+	White Widow
+	Orange Bud
+	Purple Haze
+	Ak47
+	Blueberry
+	Amnesia
+	Super SKunk
+	Silver Haze
+	ANanas Express
+	Sour Diesel
+	OG Kush
+
+Geräte
+	Bong
+	MultiBOng
+	Shisha
+	MultiShisha
+	Pfeife
+	Kawumm
+	Vaporizer(ballon)
+	MultiVapo(schlauch)
+	
+
+Framework/Engine
+Pixi JS
