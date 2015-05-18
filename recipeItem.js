@@ -1,5 +1,5 @@
-function log(idIn, valueIn, positionXIn, positionYIn) {
-    var logContext = this;
+function recipeItem(idIn, valueIn, positionXIn, positionYIn) {
+    var recipeItemContext = this;
     this.id = idIn;
     this.value = valueIn;
     this.positionX = positionXIn;
@@ -10,10 +10,10 @@ function log(idIn, valueIn, positionXIn, positionYIn) {
     
 
 
-    this.frameSprite = generateSpriteFromPath(gameManager.imageRootPath + "log2.png", this.positionX, this.positionY, this.width, this.height);
+    this.frameSprite = generateSpriteFromPath(gameManager.imageRootPath + "recipeItemBorder.png", this.positionX, this.positionY, this.width, this.height);
     this.indicatorTrueSprite = generateSpriteFromPath(gameManager.imageRootPath + "leaf_true.png", this.positionX + this.width / 4, this.positionY, this.width / 2, this.height);
     this.indicatorFalseSprite = generateSpriteFromPath(gameManager.imageRootPath + "leaf_false.png", this.positionX + this.width / 4, this.positionY, this.width / 2, this.height);
-    this.backgroundSprite = generateSpriteFromPath(gameManager.imageRootPath + "buds/bud" + this.value + ".png", this.positionX, this.positionY, this.width, this.height);
+    this.backgroundSprite = generateSpriteFromPath(gameManager.imageRootPath + "items/item" + this.value + ".jpg", this.positionX, this.positionY, this.width, this.height);
 
     this.text = new PIXI.Text(this.value + "", { font: "bold italic " + gameManager.fontDefault * 0.9 +"px Arvo", fill: "#3e1707", align: "center", stroke: "#a4410e", strokeThickness: 7 });
     
@@ -21,25 +21,25 @@ function log(idIn, valueIn, positionXIn, positionYIn) {
     this.text.position.y = this.positionY + this.height / 3;
 
     this.setNormal = function () {
-        //this.sprite.setTexture(logContext.texture);
-        var hasChild = stage.children.indexOf( logContext.indicatorFalseSprite ) !== -1;
+        //this.sprite.setTexture(recipeItemContext.texture);
+        var hasChild = stage.children.indexOf( recipeItemContext.indicatorFalseSprite ) !== -1;
         if(hasChild){
-             stage.removeChild(logContext.indicatorFalseSprite);
+             stage.removeChild(recipeItemContext.indicatorFalseSprite);
         }
   
     }
 
 
     this.setTrue = function () {
-        stage.addChild(logContext.indicatorTrueSprite);
+        stage.addChild(recipeItemContext.indicatorTrueSprite);
         gameManager.addScore(25);    
     }
 
     this.setFalse = function () {
       
-        stage.addChild(logContext.indicatorFalseSprite);
+        stage.addChild(recipeItemContext.indicatorFalseSprite);
         gameManager.addScore(-20);
-        setTimeout(function () { logContext.setNormal() }, 500);
+        setTimeout(function () { recipeItemContext.setNormal() }, 500);
      
     }
 

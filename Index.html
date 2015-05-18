@@ -14,9 +14,10 @@
 	</style>
 	<script src="pixi.js"></script>
     <script src="helper.js"></script>
-    <script src="menu.js"></script>
-    <script src="log.js"></script>
-    <script src="logManager.js"></script>
+    <script src="actionButtonManager.js"></script>
+    <script src="actionButton.js"></script>
+    <script src="recipeItem.js"></script>
+    <script src="recipeManager.js"></script>
     <script src="gameManager.js"></script>
     <script src="gameMenu.js"></script>
     <script src="customerManager.js"></script>
@@ -24,12 +25,22 @@
     <script src="highScoreMenu.js"></script>
     <script src="gameMap.js"></script>
     <script src="gameMapTile.js"></script>
+    <script src="stageManager.js"></script>
     <link rel="stylesheet" href="magic.css">
     
    
 </head>
 <body>
 <script id="u">
+
+
+        /////////////////////////////////////////#
+        //recipeitem und actionbutton sprites  
+        //müssen sich löschen
+        //anstatt neue draufzusetzen
+        //////////////////////////////////////////
+
+
         //helper methods for screen size
         var maxWidth = window.innerWidth;
         var maxHeight = window.innerHeight;
@@ -71,7 +82,7 @@
         var gameMap = new gameMap();
 
         function animate() {
-            console.log(gameState);
+            
             requestAnimFrame(animate);
 
             //not started

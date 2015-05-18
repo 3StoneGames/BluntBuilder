@@ -11,7 +11,7 @@ function gameManager() {
     if(this.releaseMode)
     {
         //local mit vs "/bluntbuilder/"
-        //local ohne vs ""
+        //local ohne vs "/"
         //für android compilen "img/"
         this.imageRootPath = "/bluntbuilder/";
     }
@@ -37,12 +37,9 @@ function gameManager() {
         this.customerManager = new customerManager();
         this.customerManager.initialize();
 
-        this.logManager = new logManager();
-        this.logManager.initialize(this.customerManager);
-       
-        
 
-        menuInitialize(this);
+        this.stageManager = new stageManager();
+        this.stageManager.initialize(this.customerManager);
 
         gameManagerContext.roundStarted = true;
     };

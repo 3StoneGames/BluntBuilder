@@ -29,7 +29,8 @@ function customerManager() {
             
             while(count < ingredientsCount)
             {
-                ingredients[count] = count + '-' + Math.floor((Math.random() * 8) + 1);//art des zu drückenden + - + nummer 
+                var tempCount = count + 1;
+                ingredients[count] = tempCount + '-' + Math.floor((Math.random() * 8) + 1);//art des zu drückenden + - + nummer 
                 count = count+1;
             }            
 
@@ -66,7 +67,7 @@ function customerManager() {
             while(count < ingredientsCount)
             {
                 var temp = ingredients[count];
-                result[count] = temp.split('-')[1]
+                result[count] = temp; //temp.split('-')[1];
                 count = count+1;
             }
             this.SpawnedCustomers[this.CustomerServedCount] = customerEntry;
